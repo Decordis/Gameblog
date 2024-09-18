@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'ForGame',
+    'ForGame.apps.ForgameConfig',
     'sign',
     'protect',
     'django_filters',

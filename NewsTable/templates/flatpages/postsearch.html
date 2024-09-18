@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %}
+
+
+
+{% block content %}
+
+
+<div class="projects">
+    <h3>Записи</h3>
+    <h3>Количество записей: {{ post|length }}</h3>
+    <form action="" method="get">
+    {{filterset.form.as_p}}
+    <input type="submit" value="найти" />
+    </form>
+</div>
+{%endblock content %}

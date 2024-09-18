@@ -1,7 +1,7 @@
 {% load static %}
 <html >
 <head>
-	<title>Мой блог</title>
+	<title>ИГРА</title>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
 
@@ -14,10 +14,7 @@
 
 		<div id="navigation">
 			<ul>
-			    <li><a href="#" class="active">Главная</a></li>
-				<li><a href="/sign/login">Войти</a></li>
-                <li><a href="/main/search/">Поиск</a></li>
-				<li><a href="#">Админ панель</a></li>
+			    <li><a href="/main" class="active">Главная</a></li>
 
 			</ul>
 		</div>
@@ -26,14 +23,10 @@
 			<div id="content" class="left">
 
 				<div class="projects">
-					<h3>Записи</h3>
-					<div class="item">
-						<div class="image left">
-							<a href="#"><img src="css/images/project01.jpg" alt="" /></a>
 						</div>
 						<div class="text left">
-							{%block content%}
-							{%endblock content%}
+							{% block content %}
+							{%endblock content %}
 						</div>
 						<div class="cl">&nbsp;</div>
 					</div>
