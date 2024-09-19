@@ -1,10 +1,32 @@
 {% extends 'flatpages/default.html' %}
-{% block title %}
-News
-{% endblock title %}
 
 {% block content %}
-<div class="nt-item"><span class="new">new</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
-<div class="nt-item"><span class="strategy">strategy</span>Isum dolor sit amet, consectetur adipiscing elit. </div>
-<div class="nt-item"><span class="racing">racing</span>Isum dolor sit amet, consectetur adipiscing elit. </div>
+{% if post %}
+<div class="projects">
+    <h3>Записи</h3>
+    <h3>Количество записей: {{ post|length }}</h3>
+<hr>
+    {% for new in post %}
+    <div class="item">
+        <div class="image left">
+            <a href="#"><img src="css/images/project01.jpg" alt="" /></a>
+        </div>
+        <div class="text left">
+            <h1>{{new.name}}</h1>
+            <p>{{new.date}}</p>
+            <p>{{new.description|truncatechars:20}}</p>
+            Категория:
+            {% for cat in new.category.all %}
+            {{cat.category}}
+            {% endfor %}
+            <p>Автор: {{new.author}}</p>
+        </div>
+        <div class="cl">&nbsp;</div>
+    </div>
+    {% endfor%}
+</div>
+
+{%else%}
+    <h2>Новостей нет!</h2>
+{% endif %}
 {% endblock content %}

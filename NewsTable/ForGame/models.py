@@ -5,27 +5,27 @@ from django.urls import reverse
 
 # Create your models here.
 
-class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user
+# class Author(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return self.user
 
 
 class Post(models.Model):
     name = models.CharField(max_length=250, unique=True)
     description = models.TextField()
-    author = models.ManyToManyField(Author, through='AuthorPost')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(to='Category', through='PostCategory')
 
     def get_absolute_url(self):
-        return reverse('news_detail', args=[str(self.id)])
+        return reverse('postdetail', args=[str(self.id)])
 
 
-class AuthorPost(models.Model):
-    user = models.ForeignKey(Author, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+# class AuthorPost(models.Model):
+#     user = models.ForeignKey(Author, on_delete=models.CASCADE)
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Category(models.Model):

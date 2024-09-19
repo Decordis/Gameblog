@@ -1,8 +1,11 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 # Create your views here.
@@ -47,7 +50,22 @@ class PostSearch(ListView):
         return context
 
 
-class PostCreate(CreateView):
+class PostCreate(CreateView, LoginRequiredMixin, PermissionRequiredMixin):
+    permission_required = 'ForGame.add_post'
     form_class = PostForm
     model = Post
     template_name = 'flatpages/postcreate.html'
+
+
+class PostUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'ForGame.change_post'
+    form_class = PostForm
+    model = Post
+    template_name = 'flatpages/news_edit.html'
+
+
+class PostDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'ForGame.delete_post'
+    model = Post
+    template_name = 'flatpages/news_delete.html'
+    success_url = reverse_lazy('news_list')
