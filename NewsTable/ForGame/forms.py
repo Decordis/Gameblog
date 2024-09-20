@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -29,3 +29,13 @@ class PostForm(forms.ModelForm):
                 raise ValidationError('Поле автора не должно быть пустым')
 
             return cleaned_data
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = [
+            'comment_text',
+            'user',
+        ]

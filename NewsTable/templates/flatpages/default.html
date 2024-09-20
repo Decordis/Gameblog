@@ -17,29 +17,21 @@
 			    <li><a href="#" class="active">Главная</a></li>
 				<li><a href="/sign/login">Войти</a></li>
                 <li><a href="/main/search/">Поиск</a></li>
-				<li><a href="#">Админ панель</a></li>
+				<li><a href="/admin">Админ панель</a></li>
 
 			</ul>
 		</div>
 
 		<div id="main">
-			<div id="content" class="left">
-
-				<div class="projects">
-					<h3>Записи</h3>
-					<div class="item">
-						<div class="image left">
-							<a href="#"><img src="css/images/project01.jpg" alt="" /></a>
-						</div>
-						<div class="text left">
-							{%block content%}
-							{%endblock content%}
-						</div>
-						<div class="cl">&nbsp;</div>
-					</div>
-
-				</div>
+			<div class="text left">
+				{%block content%}
+				{%endblock content%}
 			</div>
+			<div class="cl">&nbsp;</div>
+		</div>
+
+	</div>
+</div>
 
 			<div class="cl">&nbsp;</div>
 		</div>

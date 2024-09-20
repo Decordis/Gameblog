@@ -18,6 +18,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(to='Category', through='PostCategory')
+    img = models.ImageField(upload_to='image/%Y')
 
     def get_absolute_url(self):
         return reverse('postdetail', args=[str(self.id)])
@@ -47,3 +48,6 @@ class Comment(models.Model):
     comment_date = models.DateTimeField(auto_now_add=True)
     comment_text = models.CharField(max_length=2000)
     rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.comment_text}'

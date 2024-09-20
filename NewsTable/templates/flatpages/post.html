@@ -9,10 +9,10 @@
     {% for new in post %}
     <div class="item">
         <div class="image left">
-            <a href="#"><img src="css/images/project01.jpg" alt="" /></a>
+            <a href="#"><img src="{post.img.url}" width="200px" /></a>
         </div>
         <div class="text left">
-            <h1>{{new.name}}</h1>
+            <h1><a href="{{new.id}}">{{new.name}}</a></h1>
             <p>{{new.date}}</p>
             <p>{{new.description|truncatechars:20}}</p>
             Категория:

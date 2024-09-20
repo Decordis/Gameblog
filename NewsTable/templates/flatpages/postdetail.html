@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<div class="item">
+        <div class="image left">
+            <a href="#"><img src="{post.img.url}" width="200px" /></a>
+        </div>
+        <div class="text left">
+            <h1>Статья: {{post.name}}</h1>
+            <h1>Текст:</h1>
+            <p>{{post.description}}</p>
+            <p>Дата публикации: {{post.date}}</p>
+             Категория:
+            {% for cat in post.category.all %}
+            {{cat.category}}
+            {% endfor %}
+            <h10>Автор: {{post.author}} </h10>
+
+        </div>
+    <div class="form-comment">
+        <h3>Оставить комментарий</h3>
+            <form action="{% url 'add_comments' post.id %}" method="post">
+                {% csrf_token %}
+                {{ form.as_c }}
+                <input type="submit" value="Save" />
+            </form>
+    </div>
+        <div class="cl">&nbsp;</div>
+    </div>
+{% endblock content %}
