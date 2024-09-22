@@ -19,12 +19,22 @@
         </div>
     <div class="form-comment">
         <h3>Оставить комментарий</h3>
-            <form action="{% url 'add_comments' post.id %}" method="post">
+            <form action="" method="post">
                 {% csrf_token %}
-                {{ form.as_c }}
+                {{ form }}
                 <input type="submit" value="Save" />
             </form>
     </div>
         <div class="cl">&nbsp;</div>
     </div>
+<div>
+    <h3>Все комментарии к посту:</h3>
+    {% if post.comment_set.all %}
+    {% for com in post.comment_set.all %}
+    <p> {{com.user}}</p>
+    <p> {{com.comment_text}}</p>
+    <p> {{com.comment_date}}</p>
+    {% endfor %}
+    {% endif %}
+</div>
 {% endblock content %}

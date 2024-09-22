@@ -1,9 +1,10 @@
+import requests
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
 from .models import Post, Category, Comment
 from .filters import PostFilter
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -33,6 +34,21 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'flatpages/postdetail.html'
     context_object_name = 'post'
+
+    def post(self, request):
+        post = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return redirect('postdetail', pk=post.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
 
 
 class PostSearch(ListView):
@@ -71,8 +87,3 @@ class PostDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('post')
 
 
-class AddComments(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = 'ForGame.add_comment'
-    form_class = CommentForm
-    model = Comment
-    template_name = 'flatpages/postdetail.html'
