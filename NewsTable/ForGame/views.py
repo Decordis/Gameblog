@@ -35,7 +35,7 @@ class PostDetail(DetailView):
     template_name = 'flatpages/postdetail.html'
     context_object_name = 'post'
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         post = self.get_object()
         form = CommentForm(request.POST)
         if form.is_valid():
