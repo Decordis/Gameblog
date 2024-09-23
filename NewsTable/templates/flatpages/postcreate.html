@@ -3,9 +3,9 @@
 {% block content %}
 <h1>Запись</h1>
 <hr>
-<form action="/" method="post">
+<form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
     <input type="submit" value="Save" />
 </form>
 {% endblock content %}

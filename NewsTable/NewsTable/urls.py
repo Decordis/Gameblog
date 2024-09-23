@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
     path('main/', include('ForGame.urls')),
-    path('sign/', include('sign.urls')),
+    # path('sign/', include('sign.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', include('protect.urls')),
 ]
 

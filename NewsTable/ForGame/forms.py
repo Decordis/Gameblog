@@ -1,6 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Post, Comment
+from allauth.account.forms import SignupForm
+from string import hexdigits
+import random
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 class PostForm(forms.ModelForm):
@@ -32,10 +37,24 @@ class PostForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-
     class Meta:
         model = Comment
         fields = [
             'comment_text',
         ]
 
+
+# class CommonSignupForm(SignupForm):
+#     def save(self, request):
+#         user = super(CommonSignupForm, self).save(request)
+#         user.is_active = False
+#         code = ''.join(random.sample(hexdigits, 4))
+#         user.code = code
+#         user.save()
+#         send_mail(
+#             subject='Код активации',
+#             message=f'Код активации аккаунта: {code}',
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             recipient_list=[user.email],
+#         )
+#         return user

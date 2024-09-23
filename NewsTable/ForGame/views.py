@@ -1,6 +1,6 @@
 import requests
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, User
 from .filters import PostFilter
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -86,4 +86,18 @@ class PostDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'flatpages/postdelete.html'
     success_url = reverse_lazy('post')
 
+
+class ConfirmUser(UpdateView):
+    model = User
+    context_object_name = 'confirm_user'
+
+    def post(self, request,*args, **kwargs):
+        if 'code' in request.POST:
+            user = User.objects.filter(code=request.POST['code'])
+            if user.exists():
+                user.update(is_active=True)
+                user.update(code=None)
+            else:
+                return render(self.request, 'sign/invalid_code.html')
+        return redirect('account_login')
 

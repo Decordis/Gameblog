@@ -4,19 +4,21 @@ from .models import BaseRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import Group
+from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
 
 
-class BaseRegisterView(CreateView):
-    model = User
-    form_class = BaseRegisterForm
-    success_url = '/'
+# class BaseRegisterView(CreateView):
+#     model = User
+#     form_class = BaseRegisterForm
+#     success_url = '/'
+#
+#
+# @login_required
+# def upgrade_me(request):
+#     user = request.user
+#     private_group = Group.objects.get(name='private')
+#     if not request.user.groups.filter(name='private').exists():
+#         private_group.user_set.add(user)
+#     return redirect('/post')
 
 
-@login_required
-def upgrade_me(request):
-    user = request.user
-    private_group = Group.objects.get(name='private')
-    if not request.user.groups.filter(name='private').exists():
-        private_group.user_set.add(user)
-    return redirect('/post')
-# Create your views here.

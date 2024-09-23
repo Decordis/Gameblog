@@ -1,0 +1,14 @@
+{% extends 'sign/maindefault.html' %}
+
+{% block content %}
+<title>Активация аккаунта</title>
+<div class="text-center mt-4 name" style="...">
+     <h3>Активация аккаунта</h3>
+</div>
+<h3 style="..."> Неверный код:( </h3>
+<form style="...">
+    <input type="button" onclick="history.back();" class="btn btn-outline-secondary btn-sm"
+    value="Вернуться к вводу кода"/>
+</form>
+<button> <a href="/sign/signup"> Регистрация </a></button>
+{% endblock %}
