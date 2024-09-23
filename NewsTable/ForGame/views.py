@@ -19,15 +19,23 @@ class PostList(ListView):
     context_object_name = 'post'
     paginate_by = 10
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     self.filterset = NewsFilter(self.request.GET, queryset=queryset)
-    #     return self.filterset.qs
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['filterset'] = self.filterset
-    #     return context
+
+class CategoryList(PostList):
+    model = Category
+    template_name = 'flatpages/categorylist.html'
+    context_object_name = 'categorylist'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
+        queryset = queryset.filter(category=self.category).order_by('post')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_not_subscriber'] = self.request.user not in self.category.subscribers.all()
+        context['category'] = self.category
+        return context
 
 
 class PostDetail(DetailView):
@@ -91,7 +99,7 @@ class ConfirmUser(UpdateView):
     model = User
     context_object_name = 'confirm_user'
 
-    def post(self, request,*args, **kwargs):
+    def post(self, request, *args, **kwargs):
         if 'code' in request.POST:
             user = User.objects.filter(code=request.POST['code'])
             if user.exists():

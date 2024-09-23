@@ -2,14 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 
-
-# Create your models here.
-
-# class Author(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.user
 class User(AbstractUser):
     code = models.CharField(max_length=15, blank=True, null=True)
 
@@ -25,10 +17,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('postdetail', args=[str(self.id)])
 
-
-# class AuthorPost(models.Model):
-#     user = models.ForeignKey(Author, on_delete=models.CASCADE)
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Category(models.Model):
