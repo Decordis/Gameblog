@@ -20,22 +20,10 @@ class PostList(ListView):
     paginate_by = 10
 
 
-class CategoryList(PostList):
+class CategoryList(ListView):
     model = Category
     template_name = 'flatpages/categorylist.html'
-    context_object_name = 'categorylist'
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
-        queryset = queryset.filter(category=self.category).order_by('post')
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['is_not_subscriber'] = self.request.user not in self.category.subscribers.all()
-        context['category'] = self.category
-        return context
+    context_object_name = 'category'
 
 
 class PostDetail(DetailView):
@@ -57,6 +45,16 @@ class PostDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         return context
+
+
+@login_required
+def subscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    category.subscribers.add(user)
+
+    message = "Подписка на категорию прошла успешно!"
+    return render(request, 'flatpages/subscribe.html', {'category': category, 'message': message})
 
 
 class PostSearch(ListView):
@@ -108,4 +106,3 @@ class ConfirmUser(UpdateView):
             else:
                 return render(self.request, 'sign/invalid_code.html')
         return redirect('account_login')
-
