@@ -5,7 +5,7 @@
          {%for cat in category %}
          <h1><{{cat.category}}</h1>
             {% if not user in cat.subscribers.all%}
-            <button><a href="{% url subscribe' category.id %}"> Подписаться на категорию</a></button>
+            <button><a href="{% url 'subscribe' category.id %}"> Подписаться на категорию</a></button>
             {% endif %}
          {%endfor%}
          {% endblock content %}

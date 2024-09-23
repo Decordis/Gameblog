@@ -11,6 +11,6 @@ urlpatterns = [
     path('<int:pk>/delete/', PostDelete.as_view(), name='postdelete'),
     path('<int:pk>/update/', PostUpdate.as_view(), name='postupdate'),
     path('confirm/', ConfirmUser.as_view(), name='confirm_user'),
-    path('categories/<int:pk>', CategoryList.as_view(), name='categorylist'),
+    path('categories', CategoryList.as_view(), name='categorylist'),
     path('categories/<int:pk>/subscribe', subscribe, name='subscribe'),
 ]
